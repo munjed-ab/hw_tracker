@@ -1,0 +1,65 @@
+.modal-content {
+    border-radius: 30px;
+}
+.add-course {
+    display: flex;
+    color: white;
+    font-size: 70px;
+    justify-content: flex-end;
+    text-decoration: none;
+}
+.add-course:hover {
+    text-decoration: none;
+}
+.greeting {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+label {
+    display: block;
+    font-weight: bold;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.progress {
+    height: 20px;
+    background-color: #007bff;
+    border-radius: 10px;
+}
+.progress-bar {
+    height: 20px;
+    line-height: 20px;
+}
+.course-item {
+    border-radius: 30px;
+}
+.homework-details {
+    padding: 20px;
+}
+.shotgun {
+    padding: 20px;
+}
+/* Loading Spinner Styles */
+#loading-spinner {
+    display: none;
+    position: fixed;
+    z-index: 10000000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.modal-content{
+    background-color: #343a40 !important;
+}
+

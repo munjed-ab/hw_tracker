@@ -1,0 +1,24 @@
+{% for course_data in course_data %}
+  <div id="course-item-{{ course_data.course.id }}" class="card text-white bg-dark mb-3 course-item">
+    <h3 class="card-header">{{ course_data.course.name }}</h3>
+    <div class="card-body">
+      {% for hw_data in course_data.homeworks %}
+        <div class="homework-item">
+        <a href="{{hw_data.homework.url}}" target="_blank" style="text-decoration:none">
+        <h4>{{ hw_data.homework.name }}</h4>
+          </a>
+          <div class="progress">
+            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ hw_data.progress_percentage }}%;" aria-valuenow="{{ hw_data.progress_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="homework-details">
+            <p>Start date: {{ hw_data.homework.start_date }}</p>
+            <p>Due date: {{ hw_data.homework.due_date }}</p>
+            <p>Days left: {{ hw_data.days_left }}</p>
+          </div>
+          <a href="#" class="card-link text-danger" hx-get="{% url 'delete_course' course_data.course.id %}" hx-target="#delete-course-modal .modal-content" hx-trigger="click">Delete</a>
+          <a href="{% url 'edit_course' course_data.course.id %}" class="card-link">Edit</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endfor %}

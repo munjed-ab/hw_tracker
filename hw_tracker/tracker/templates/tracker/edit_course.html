@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<form method="POST" id="edit-course-form" action="">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="course_name">Course Name</label>
+    <input
+      type="text"
+      name="course_name"
+      id="course_name"
+      class="form-control"
+      value="{{ course.name }}"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="homework_name">Homework Name</label>
+    <input
+      type="text"
+      name="homework_name"
+      id="homework_name"
+      class="form-control"
+      value="{{ homework.name }}"
+    />
+  </div>
+  <div class="form-group">
+    <label for="start_date">Start Date</label>
+    <input
+      type="date"
+      name="start_date"
+      id="start_date"
+      class="form-control"
+      value="{{ homework.start_date|date:'Y-m-d'  }}"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="due_date">Due Date</label>
+    <input
+      type="date"
+      name="due_date"
+      id="due_date"
+      class="form-control"
+      value="{{ homework.due_date|date:'Y-m-d'  }}"
+      required
+    />
+  </div>
+  <div class="modal-footer bg-dark">
+    <button type="button" class="btn btn-secondary" id="close-btn">Close</button>
+    <button id="edit-course-btn" type="submit" class="btn btn-primary">Save Changes</button>
+  </div>
+</form>
+
+<script>
+  document.getElementById("close-btn").addEventListener("click", function() {
+    window.history.back();
+  });
+</script>
+
+{% endblock %}
