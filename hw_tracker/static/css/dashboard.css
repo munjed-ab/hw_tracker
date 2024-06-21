@@ -49,6 +49,8 @@ select {
 }
 .shotgun {
     padding: 20px;
+    display: flex;
+    flex-wrap: nowrap;
 }
 /* Loading Spinner Styles */
 #loading-spinner {

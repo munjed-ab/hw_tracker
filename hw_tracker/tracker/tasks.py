@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 @shared_task(bind=True, max_retries=2)
-def log(self):
+def move_deez(self):
     try:
         homeworks = Homework.objects.all()
         print(f"Number of homeworks: {homeworks.count()}")

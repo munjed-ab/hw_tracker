@@ -6,9 +6,13 @@
     <div class="card-body">
     {% for hw_data in course_data.homeworks %}
       <div class="homework-item">
-        <a href="{{hw_data.homework.url}}">
-        <h4>{{ hw_data.homework.name }}</h4>
-          </a>
+            {% if hw_data.homework.url != "#" %}
+          <a href="{{hw_data.homework.url}}" target="_blank" style="text-decoration:none">
+          <h4>{{ hw_data.homework.name }}</h4>
+            </a>
+            {% else %}
+            <h4>{{ hw_data.homework.name }}</h4>
+            {% endif %}
         <div class="progress">
           <div class="progress-bar bg-danger" role="progressbar" style="width: {{ hw_data.progress_percentage }}%;" aria-valuenow="{{ hw_data.progress_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
         </div>

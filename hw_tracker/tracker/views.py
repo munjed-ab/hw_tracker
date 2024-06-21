@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect
@@ -7,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.loader import render_to_string
 
-from .forms import UserForm, AddCourseForm
+from .forms import UserForm, AddCourseForm, UpdateUserForm
 from .models import Course, Homework
 from .scrap import *
 from datetime import datetime
@@ -65,6 +66,19 @@ def dashboard(request):
 
     return render(request, 'tracker/dashboard.html', {'course_data': course_data})
 
+
+@login_required
+def update_user_profile(request):
+    if request.method == 'POST':
+        form = UpdateUserForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('dashboard')
+    else:
+        form = UpdateUserForm(instance=request.user)
+
+    return render(request, 'tracker/update_user.html', {'form': form})
 
 def get_courses_cards(user):
     courses = Course.objects.filter(user=user)

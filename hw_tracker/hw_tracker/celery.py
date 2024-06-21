@@ -19,8 +19,8 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     'minus-at-midnight': {
-        'task': 'tracker.tasks.log',
-        'schedule': 5.00,  # crontab(minute='0', hour='0') every day at midnight
+        'task': 'tracker.tasks.move_deez',
+        'schedule': crontab(minute='0', hour='0'),  # crontab(minute='0', hour='0') every day at midnight
     },
 }
 
