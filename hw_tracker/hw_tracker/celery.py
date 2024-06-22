@@ -20,10 +20,13 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'minus-at-midnight': {
         'task': 'tracker.tasks.move_deez',
-        'schedule': crontab(minute='0', hour='0'),  # crontab(minute='0', hour='0') every day at midnight
+        'schedule': crontab(minute='0', hour='0') ,  # crontab(minute='0', hour='0') every day at midnight
+    },
+    'send-reminder-emails': {
+        'task': 'tracker.tasks.send_track_email',
+        'schedule': 10.00 ,#crontab(minute='0', hour='8')  # every day at 8 AM
     },
 }
-
 
 @app.task(bind=True)
 def debug_task(self):
