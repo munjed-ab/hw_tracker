@@ -1,0 +1,77 @@
+  .user-form {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  span.error {
+    color: red;
+    font-size: 15px;
+    margin: 0px;
+    padding: 5px;
+    list-style-type: none;
+    text-decoration: none;
+  }
+  span.error li {
+    color: red;
+    font-size: 15px;
+    margin: 0px;
+    padding: 5px;
+    list-style-type: none;
+    text-decoration: none;
+  }
+  span.help {
+    color: orange;
+    font-size: 15px;
+    margin: 0px;
+    padding: 5px;
+    list-style-type: none;
+    text-decoration: none;
+  }
+  span.help li {
+    color: orange;
+    font-size: 15px;
+    margin: 0px;
+    padding: 5px;
+    list-style-type: none;
+    text-decoration: none;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+  .checkbox-group {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-evenly;
+  }
+  .checkbox-group input[type="checkbox"] {
+    margin: 15px;
+  }
+   #logo{
+    text-align: center;
+    font-family: "Edu TAS Beginner", cursive;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 70px;
+}
