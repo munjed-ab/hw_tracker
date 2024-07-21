@@ -87,6 +87,10 @@ WSGI_APPLICATION = 'hw_tracker.wsgi.application'
 #     }
 # }
 
+#CSRF
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
