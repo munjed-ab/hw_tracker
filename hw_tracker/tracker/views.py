@@ -111,7 +111,13 @@ def get_courses_cards(user):
         })
     return course_data
 
+def calc_time_left(start_date, due_date):
+    due_date = datetime.strptime(due_date, r'%Y-%m-%d')
 
+    difference = due_date - start_date
+    days = difference.days
+    hours = difference.seconds // 3600
+    return f"{days} days, {hours} hours left"
 
 @login_required
 def add_course(request):
@@ -139,6 +145,7 @@ def add_course(request):
             progress_percentage = (days_passed / total_duration) * 100 if total_duration != 0 else 0
 
             homework.days_left = days_left
+            homework.time_left = calc_time_left(datetime.now(), str(due_date))
             homework.save()
 
             course_data = {
@@ -166,9 +173,9 @@ def edit_course(request, course_id):
             due_date = request.POST['due_date']
             start_date = request.POST['start_date']
 
-            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+            start_date = datetime.strptime(start_date, r'%Y-%m-%d').date()
 
-            due_date = datetime.strptime(due_date, '%Y-%m-%d').date()
+            due_date = datetime.strptime(due_date, r'%Y-%m-%d').date()
 
             course.name = course_name
             course.save()
