@@ -123,7 +123,7 @@ def scrape_courses_and_homework(driver):
                         "days_left": days_left,
                         "url": homework_url
                     }
-                    log_info(f"Getting {homework["name"]}")
+                    log_info(f"Getting {homework['name']}")
                     course["homeworks"].append(homework)
                     
             except Exception as e:

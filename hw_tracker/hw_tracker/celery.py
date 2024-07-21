@@ -24,7 +24,7 @@ app.conf.beat_schedule = {
     },
     'send-reminder-emails': {
         'task': 'tracker.tasks.send_track_email',
-        'schedule': 10.00 ,#crontab(minute='0', hour='8')  # every day at 8 AM
+        'schedule': crontab(minute='0', hour='8') ,#crontab(minute='0', hour='8')  # every day at 8 AM
     },
 }
 
