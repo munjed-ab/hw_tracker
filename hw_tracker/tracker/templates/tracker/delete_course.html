@@ -1,0 +1,12 @@
+<div class="modal-body">
+  <p>Are you sure you want to delete the course "{{ course.name }}"?</p>
+</div>
+<div class="modal-footer">
+  <form method="POST" action="{% url 'delete_course' course.id %}">
+    {% csrf_token %}
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+      Cancel
+    </button>
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+</div>

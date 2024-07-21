@@ -1,0 +1,89 @@
+<!doctype html>{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner:wght@400..700&display=swap" rel="stylesheet">
+    <link
+      type="text/css"
+      href="{% static 'css/bootstrap.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/all.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/main.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <title>Login</title>
+</head>
+
+<body>
+
+<div class="container">
+    <h1 id="logo">bro tracker</h1>
+  <form id="login-form" method="POST" action="" class="user-form">
+    {% csrf_token %}
+        <div class="form-group">
+      <label for="{{ form.username.id_for_label }}">Username</label>
+      {{ form.username }}
+      <span class="error">{{ form.username.errors }}</span>
+    </div>
+            <div class="form-group">
+      <label for="{{ form.password.id_for_label }}">Password</label>
+      {{ form.password }}
+      <span class="error">{{ form.password.errors }}</span>
+    </div>
+    <div style="text-align: center">
+      <button type="submit" class="btn btn-primary">Login</button><br/><br/>
+      <a href="{% url 'signup' %}">don't have an account yet?</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  var form_fields = document.getElementsByTagName("input");
+  form_fields[1].placeholder = "Enter username..";
+  form_fields[2].placeholder = "Enter password..";
+</script>
+          <div class="toast-container"></div>
+
+          {% if messages %} {% for message in messages %}
+          <script>
+            createToast("{{message.message}}", "{{message.tags}}");
+            function createToast(message, messageType) {
+              const toast = document.querySelector(".toast-container");
+              toast.style.display = "block";
+              toast.textContent = message;
+              toast.style.animation = "fadeOut 3s";
+
+              if (messageType === "success") {
+                toast.style.backgroundColor = "green";
+              } else if (messageType === "error") {
+                toast.style.backgroundColor = "red";
+              }
+
+              setTimeout(() => {
+                toast.style.animation = "";
+                toast.style.display = "none";
+              }, 5000);
+            }
+          </script>
+          {% endfor %} {% endif %}
+
+<script src="https://unpkg.com/htmx.org@1.5.0"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/jquery.easing.min.js' %}"></script>
+</body>
+</html>
+
