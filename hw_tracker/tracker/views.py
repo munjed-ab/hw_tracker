@@ -101,10 +101,14 @@ def get_courses_cards(user):
 
         for homework in homeworks:
             if homework.start_date and homework.due_date:
-                days_left = homework.days_left
-                days_passed = (datetime.today().date() - homework.start_date).days
-                total_duration = days_left + days_passed
+                
+                difference1 = datetime.strptime(homework.due_date.strftime(r"%d-%m-%Y"), r"%d-%m-%Y") - datetime.now()
+                days_left = ((difference1.seconds // 3600)/24) + difference1.days
 
+                difference2 = (datetime.now() - datetime.strptime(homework.start_date.strftime(r"%d-%m-%Y"), r"%d-%m-%Y"))
+                days_passed = ((difference2.seconds // 3600)/24) + difference2.days
+
+                total_duration = float(days_left) + float(days_passed)
                 progress_percentage = (days_passed / total_duration) * 100 if total_duration != 0 else 0
 
             else:
