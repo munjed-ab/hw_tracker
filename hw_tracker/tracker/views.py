@@ -1,16 +1,14 @@
-from django.contrib.auth.models import User
-from django.core.serializers.json import DjangoJSONEncoder
-from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.loader import render_to_string
-
+from django.views.decorators.csrf import csrf_exempt
 from .forms import UserForm, AddCourseForm, UpdateUserForm
 from .models import Course, Homework
-from .scrap import *
+from .scrap import scrap_deez
 from datetime import datetime
 
 
@@ -54,7 +52,6 @@ def logout_view(request):
     return redirect("login")
 
 
-from datetime import datetime, date
 
 
 @login_required
@@ -207,8 +204,8 @@ def edit_course(request, course_id):
             return redirect("dashboard")
         else:
             return render(request, "tracker/edit_course.html", context={"course": course, "homework": homework})
-    except:
-        messages.error(request, "Invalid Inputs, please check again.")
+    except Exception as e:
+        messages.error(request, f"Invalid Inputs, please check again. {e}")
         return redirect("dashboard")
 
 @login_required
@@ -223,7 +220,7 @@ def delete_course(request, course_id):
 
 
 
-from django.views.decorators.csrf import csrf_exempt
+
 
 @login_required
 @csrf_exempt

@@ -1,6 +1,6 @@
 from celery import shared_task
 from django.db import transaction
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import send_mail
 from django.conf import settings
 from .models import Homework
 import logging
