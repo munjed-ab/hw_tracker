@@ -68,6 +68,18 @@ def dashboard(request):
 
 
 @login_required
+def refresh_data(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
+    courses = Course.objects.filter(user=request.user.id)
+    for course in courses:
+        homework = Homework.objects.get(course=course)
+        homework.save()
+    
+    return redirect("dashboard")
+
+
+@login_required
 def update_user_profile(request):
     if request.method == 'POST':
         form = UpdateUserForm(request.POST, instance=request.user)

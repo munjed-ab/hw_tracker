@@ -1,18 +1,67 @@
-{% extends 'base.html' %}
-{% block content %}
-{% load static %}
+{% extends 'base.html' %} {% block content %} {% load static %}
 
-<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
 
+<div class="col-12 refresh"></div>
 <div class="row shotgun">
   <div class="col-10 float-left greeting">
-    <h1>Hello, {{ request.user.username }}!</h1>
+    <a class="add-course" href="{% url 'refresh_data' %}">
+      <svg
+        id="refresh-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0,0,256,256"
+        width="64px"
+        height="64px"
+      >
+        <g
+          fill="none"
+          fill-rule="nonzero"
+          stroke="#fefefe"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-miterlimit="10"
+          stroke-dasharray=""
+          stroke-dashoffset="0"
+          font-family="none"
+          font-weight="none"
+          font-size="none"
+          text-anchor="none"
+          style="mix-blend-mode: normal"
+        >
+          <g transform="scale(8,8)">
+            <path
+              d="M28.369,6.989c-1.893,-0.122 -3.706,-0.721 -4.986,-2.01c-0.33,-0.332 -0.878,-0.156 -0.928,0.309c-0.18,1.668 -1.2,3.231 -2.709,4.539"
+            />
+            <path
+              d="M3.631,25.011c1.893,0.122 3.706,0.721 4.986,2.01c0.33,0.332 0.878,0.156 0.928,-0.309c0.18,-1.668 1.2,-3.231 2.709,-4.539"
+            />
+            <path
+              d="M9.152,26.5c-3.856,-6.724 -4.251,-14.814 -0.902,-20.25c2.269,-1.252 5.384,-1.614 8.25,-1.25"
+            />
+            <path
+              d="M22.848,5.5c3.856,6.724 4.251,14.814 0.902,20.25c-2.269,1.252 -5.385,1.614 -8.25,1.25"
+            />
+          </g>
+        </g>
+      </svg>
+    </a>
   </div>
+
   <div class="col float-right">
-    <a class="add-course" href="#" data-toggle="modal" data-target="#add-course-modal">+</a>
+    <a
+      class="add-course"
+      href="#"
+      data-toggle="modal"
+      data-target="#add-course-modal"
+    >
+      <img
+        id="add-icon"
+        src="data:image/png;base64,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"
+    /></a>
   </div>
 </div>
-
 
 <!-- Button trigger modal -->
 <!--<div style="text-align: center; padding-bottom:20px">
@@ -20,12 +69,17 @@
 </div>
 -->
 
-<div id="course-list">
-  {% include 'tracker/course_list_partial.html' %}
-</div>
+<div id="course-list">{% include 'tracker/course_list_partial.html' %}</div>
 
 <!-- Delete Course Modal -->
-<div class="modal fade" id="delete-course-modal" tabindex="-1" role="dialog" aria-labelledby="delete-course-modal-title" aria-hidden="true">
+<div
+  class="modal fade"
+  id="delete-course-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="delete-course-modal-title"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content bg-dark"></div>
   </div>
@@ -38,31 +92,55 @@
   </div>
 </div>
 
-
-
 <!-- Modal Scrap HWs -->
-<div class="modal fade" id="fetch-hws" tabindex="-1" role="dialog" aria-labelledby="fetch-hws-title" aria-hidden="true">
+<div
+  class="modal fade"
+  id="fetch-hws"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="fetch-hws-title"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content bg-dark">
       <div class="modal-header">
         <h5 class="modal-title" id="fetch-hws-title">Fetch SVU Homeworks</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span class="text-white" aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" id="login-form" hx-post="{% url 'fetch_hws' %}" hx-target="#course-list" hx-swap="innerHTML" hx-headers='{"HX-Request": "true"}' hx-trigger="submit">
+        <form
+          method="POST"
+          id="login-form"
+          hx-post="{% url 'fetch_hws' %}"
+          hx-target="#course-list"
+          hx-swap="innerHTML"
+          hx-headers='{"HX-Request": "true"}'
+          hx-trigger="submit"
+        >
           {% csrf_token %}
           <div class="form-group">
             <label for="svu-id">SVU ID</label>
-            <input type="text" name="svu-id" id="svu-id">
+            <input type="text" name="svu-id" id="svu-id" />
           </div>
           <div class="form-group">
             <label for="svu-pass">Password</label>
-            <input type="password" name="svu-pass" id="svu-pass">
+            <input type="password" name="svu-pass" id="svu-pass" />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
             <button type="submit" class="btn btn-primary">Fetch</button>
           </div>
         </form>
@@ -72,36 +150,81 @@
 </div>
 
 <!-- Add Course Modal -->
-<div class="modal fade" id="add-course-modal" tabindex="-1" role="dialog" aria-labelledby="add-course-modal-title" aria-hidden="true">
+<div
+  class="modal fade"
+  id="add-course-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="add-course-modal-title"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content bg-dark">
       <div class="modal-header">
         <h5 class="modal-title" id="add-course-modal-title">Add New Course</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span class="text-white" aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form id="add-course-form" hx-post="{% url 'add_course' %}" hx-target="#course-list" hx-swap="beforebegin">
+        <form
+          id="add-course-form"
+          hx-post="{% url 'add_course' %}"
+          hx-target="#course-list"
+          hx-swap="beforebegin"
+        >
           {% csrf_token %}
           <div class="form-group">
             <label for="course_name">Course Name</label>
-            <input type="text" name="course_name" id="course_name" class="form-control" required>
+            <input
+              type="text"
+              name="course_name"
+              id="course_name"
+              class="form-control"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="homework_name">Homework Name (Optional)</label>
-            <input type="text" name="homework_name" id="homework_name" class="form-control">
+            <input
+              type="text"
+              name="homework_name"
+              id="homework_name"
+              class="form-control"
+            />
           </div>
           <div class="form-group">
             <label for="start_date">Start Date (Optional)</label>
-            <input type="date" name="start_date" id="start_date" class="form-control">
+            <input
+              type="date"
+              name="start_date"
+              id="start_date"
+              class="form-control"
+            />
           </div>
           <div class="form-group">
             <label for="due_date">Due Date</label>
-            <input type="date" name="due_date" id="due_date" class="form-control" required>
+            <input
+              type="date"
+              name="due_date"
+              id="due_date"
+              class="form-control"
+              required
+            />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
             <button type="submit" class="btn btn-primary">Add Course</button>
           </div>
         </form>
@@ -109,7 +232,6 @@
     </div>
   </div>
 </div>
-
 
 <script src="{% static 'js/dashboard.js' %}"></script>
 

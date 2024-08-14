@@ -14,7 +14,8 @@ urlpatterns = [
     path('course/delete/<int:course_id>/', views.delete_course, name='delete_course'),
     path('fetch-hws/', views.fetch_hws, name='fetch_hws'),
     path('update-profile/', views.update_user_profile, name='update_profile'),
-
+    path('refresh/', views.refresh_data, name='refresh_data'),
+    
     # AUTH
     path("password_reset/",
          views_auth.PasswordResetView.as_view(

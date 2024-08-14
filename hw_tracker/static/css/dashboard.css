@@ -1,67 +1,85 @@
 .modal-content {
-    border-radius: 30px;
+  border-radius: 30px;
+}
+
+.refresh {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#add-icon {
+  width: 74px;
+}
+#refresh-icon {
+  width: 74px;
+}
+#refresh-icon:hover {
+  filter: drop-shadow(2px 2px 20px #ffc107);
+}
+#add-icon:hover {
+  filter: drop-shadow(2px 2px 20px #007bff);
 }
 .add-course {
-    display: flex;
-    color: white;
-    font-size: 70px;
-    justify-content: flex-end;
-    text-decoration: none;
+  display: flex;
+  color: white;
+  font-size: 70px;
+  justify-content: flex-end;
+  text-decoration: none;
 }
 .add-course:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 .greeting {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
 }
 .form-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 label {
-    display: block;
-    font-weight: bold;
+  display: block;
+  font-weight: bold;
 }
 input[type="text"],
 input[type="email"],
 input[type="password"],
 select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 .progress {
-    height: 20px;
-    background-color: #007bff;
-    border-radius: 10px;
+  height: 20px;
+  background-color: #007bff;
+  border-radius: 10px;
 }
 .progress-bar {
-    height: 20px;
-    line-height: 20px;
+  height: 20px;
+  line-height: 20px;
 }
 .course-item {
-    border-radius: 30px;
+  border-radius: 30px;
 }
 .homework-details {
-    padding: 20px;
+  padding: 20px;
 }
 .shotgun {
-    padding: 20px;
-    display: flex;
-    flex-wrap: nowrap;
+  padding: 20px;
+  display: flex;
+  flex-wrap: nowrap;
 }
 /* Loading Spinner Styles */
 #loading-spinner {
-    display: none;
-    position: fixed;
-    z-index: 10000000;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  display: none;
+  position: fixed;
+  z-index: 10000000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.modal-content{
-    background-color: #343a40 !important;
+.modal-content {
+  background-color: #343a40 !important;
 }
-
