@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'hw_tracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tracker',
+        'NAME': os.environ['DP_NAME'],
         'USER': os.environ['DB_USER'],
         'PASSWORD': os.environ['DB_PASS'],
         'HOST': os.environ['DB_HOST'],
