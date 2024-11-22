@@ -28,7 +28,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = os.environ.get("DEBUG") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bro-tracker-autk.onrender.com', 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://bro-tracker-autk.onrender.com']
 
 # Application definition
 
@@ -86,6 +87,10 @@ WSGI_APPLICATION = 'hw_tracker.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+#CSRF
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 DATABASES = {
     'default': {

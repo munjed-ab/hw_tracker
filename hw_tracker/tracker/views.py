@@ -1,16 +1,14 @@
-from django.contrib.auth.models import User
-from django.core.serializers.json import DjangoJSONEncoder
-from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.loader import render_to_string
-
+from django.views.decorators.csrf import csrf_exempt
 from .forms import UserForm, AddCourseForm, UpdateUserForm
 from .models import Course, Homework
-from .scrap import *
+from .scrap import scrap_deez
 from datetime import datetime
 
 
@@ -54,7 +52,6 @@ def logout_view(request):
     return redirect("login")
 
 
-from datetime import datetime, date
 
 
 @login_required
@@ -65,6 +62,18 @@ def dashboard(request):
     course_data = get_courses_cards(request.user)
 
     return render(request, 'tracker/dashboard.html', {'course_data': course_data})
+
+
+@login_required
+def refresh_data(request):
+    if not request.user.is_authenticated:
+        return redirect("login")
+    courses = Course.objects.filter(user=request.user.id)
+    for course in courses:
+        homework = Homework.objects.get(course=course)
+        homework.save()
+    
+    return redirect("dashboard")
 
 
 @login_required
@@ -89,10 +98,14 @@ def get_courses_cards(user):
 
         for homework in homeworks:
             if homework.start_date and homework.due_date:
-                days_left = homework.days_left
-                days_passed = (datetime.today().date() - homework.start_date).days
-                total_duration = days_left + days_passed
+                
+                difference1 = datetime.strptime(homework.due_date.strftime(r"%d-%m-%Y"), r"%d-%m-%Y") - datetime.now()
+                days_left = ((difference1.seconds // 3600)/24) + difference1.days
 
+                difference2 = (datetime.now() - datetime.strptime(homework.start_date.strftime(r"%d-%m-%Y"), r"%d-%m-%Y"))
+                days_passed = ((difference2.seconds // 3600)/24) + difference2.days
+
+                total_duration = float(days_left) + float(days_passed)
                 progress_percentage = (days_passed / total_duration) * 100 if total_duration != 0 else 0
 
             else:
@@ -111,7 +124,13 @@ def get_courses_cards(user):
         })
     return course_data
 
+def calc_time_left(start_date, due_date):
+    due_date = datetime.strptime(due_date, r'%Y-%m-%d')
 
+    difference = due_date - start_date
+    days = difference.days
+    hours = difference.seconds // 3600
+    return f"{days} days, {hours} hours left"
 
 @login_required
 def add_course(request):
@@ -139,6 +158,7 @@ def add_course(request):
             progress_percentage = (days_passed / total_duration) * 100 if total_duration != 0 else 0
 
             homework.days_left = days_left
+            homework.time_left = calc_time_left(datetime.now(), str(due_date))
             homework.save()
 
             course_data = {
@@ -166,9 +186,9 @@ def edit_course(request, course_id):
             due_date = request.POST['due_date']
             start_date = request.POST['start_date']
 
-            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+            start_date = datetime.strptime(start_date, r'%Y-%m-%d').date()
 
-            due_date = datetime.strptime(due_date, '%Y-%m-%d').date()
+            due_date = datetime.strptime(due_date, r'%Y-%m-%d').date()
 
             course.name = course_name
             course.save()
@@ -184,8 +204,8 @@ def edit_course(request, course_id):
             return redirect("dashboard")
         else:
             return render(request, "tracker/edit_course.html", context={"course": course, "homework": homework})
-    except:
-        messages.error(request, "Invalid Inputs, please check again.")
+    except Exception as e:
+        messages.error(request, f"Invalid Inputs, please check again. {e}")
         return redirect("dashboard")
 
 @login_required
@@ -200,7 +220,7 @@ def delete_course(request, course_id):
 
 
 
-from django.views.decorators.csrf import csrf_exempt
+
 
 @login_required
 @csrf_exempt

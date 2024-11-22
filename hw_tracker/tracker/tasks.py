@@ -1,6 +1,6 @@
 from celery import shared_task
 from django.db import transaction
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import send_mail
 from django.conf import settings
 from .models import Homework
 import logging
@@ -12,13 +12,15 @@ def move_deez(self):
     try:
         with transaction.atomic():
             homeworks = Homework.objects.all()
-            print(f"Number of homeworks: {homeworks.count()}")
+            logger.info(f"Logger DB: Number of homeworks: {homeworks.count()}")
             for homework in homeworks:
-                homework.days_left -= 1
-                homework.save()
-                print(f"Updated homework {homework.name} to {homework.days_left} days left")
+                if homework.days_left > 0:
+                    homework.days_left -= 1
+                    homework.save()
+                    logger.info(f"Logger DB: Updated homework {homework.name} to {homework.days_left} days left")
+                logger.info(f"Logger DB: Homework {homework.name} has {homework.days_left} days left")
     except Exception as exc:
-        logger.error(f"Task failed: {exc}")
+        logger.error(f"Logger DB: Task failed: {exc}")
         raise self.retry(exc=exc)
 
 @shared_task(bind=True, max_retries=2)
@@ -55,8 +57,8 @@ def send_track_email(self):
                     )
                     # msg = EmailMultiAlternatives(subject=subject, body=message, from_email=settings.DEFAULT_FROM_EMAIL, to=[homework.course.user.email])
                     # msg.send()
-                    logger.info(f"Sent reminder email for {homework.name} to {homework.course.user.email}")
+                    logger.info(f"Logger Email: Sent reminder email for {homework.name} to {homework.course.user.email}")
 
     except Exception as exc:
-        logger.error(f"Task failed: {exc}")
+        logger.error(f"Logger Email: Task failed: {exc}")
         raise self.retry(exc=exc)
